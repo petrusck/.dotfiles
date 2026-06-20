@@ -1,0 +1,95 @@
+# Theming
+theme = Gruvbox Dark Hard
+
+# Font
+font-family = CommitMono Nerd Font Mono
+
+# Appearance
+adjust-cell-height = 12%
+macos-titlebar-style = hidden
+
+# Window
+#window-colorspace = display-p3
+window-padding-balance = true
+window-padding-x = 9
+window-padding-y = 9
+window-padding-color = background
+
+# Scrollback
+scrollback-limit = 50_000_000
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Interface
+window-save-state = never
+
+# Shell
+shell-integration = zsh
+shell-integration-features = true
+
+# Keybindings
+keybind = cmd+s>\=new_split:right
+keybind = cmd+s>-=new_split:down
+
+keybind = cmd+s>j=goto_split:bottom
+keybind = cmd+s>k=goto_split:top
+keybind = cmd+s>h=goto_split:left
+keybind = cmd+s>l=goto_split:right
+
+keybind = cmd+s>z=toggle_split_zoom
+
+keybind = cmd+s>e=equalize_splits
+
+keybind = shift+enter=text:\x1b\r
+
+# Required configuration for pi the coding agent (see https://pi.dev/docs/latest/terminal-setup)
+keybind = alt+backspace=text:\x1b\x7f
+
+# # Vim-mode keybindings for Ghostty.
+# #
+# # Note: We're missing a number of actions to produce a better vim experience.
+# # This is what is possible today! But we plan on adding more actions to make
+# # this even better in the future.
+#
+# # Entry point
+# keybind = alt+v=activate_key_table:vim
+#
+# # Key table definition
+# keybind = vim/
+#
+# # Line movement
+# keybind = vim/j=scroll_page_lines:1
+# keybind = vim/k=scroll_page_lines:-1
+#
+# # Page movement
+# keybind = vim/ctrl+d=scroll_page_down
+# keybind = vim/ctrl+u=scroll_page_up
+# keybind = vim/ctrl+f=scroll_page_down
+# keybind = vim/ctrl+b=scroll_page_up
+# keybind = vim/shift+j=scroll_page_down
+# keybind = vim/shift+k=scroll_page_up
+#
+# # Jump to top/bottom
+# keybind = vim/g>g=scroll_to_top
+# keybind = vim/shift+g=scroll_to_bottom
+#
+# # Search (if you want vim-style search entry)
+# keybind = vim/slash=start_search
+# keybind = vim/n=navigate_search:next
+#
+# # Copy mode / selection
+# # Note we're missing a lot of actions here to make this more full featured.
+# keybind = vim/v=copy_to_clipboard
+# keybind = vim/y=copy_to_clipboard
+#
+# # Command Palette
+# keybind = vim/shift+semicolon=toggle_command_palette
+#
+# # Exit
+# keybind = vim/escape=deactivate_key_table
+# keybind = vim/q=deactivate_key_table
+# keybind = vim/i=deactivate_key_table
+#
+# # Catch unbound keys
+# keybind = vim/catch_all=ignore
