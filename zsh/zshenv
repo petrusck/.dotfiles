@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+### User's environment variables ###
+
+# Set Zsh config directory
+export ZDOTDIR="$HOME/.config/zsh"
+
+# editor
+export EDITOR="nvim"
+export VISUAL="nvim"

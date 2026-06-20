@@ -1,0 +1,22 @@
+## Used to execute commands just after logging in
+
+# Set default locale for the system
+export LANG=en_US.UTF-8
+
+# Homebrew initialization
+[[ -f "/opt/homebrew/bin/brew" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Haskell user-local binaries
+[[ -d $HOME/.local/bin ]] && PATH="$PATH:$HOME/.local/bin"
+
+# Mint (Swift package manager) binaries
+[[ -d $HOME/.mint/bin ]] && PATH="$PATH:$HOME/.mint/bin"
+
+# Rust/Cargo binaries
+[[ -d $HOME/.cargo/bin ]] && PATH="$PATH:$HOME/.cargo/bin"
+
+# JetBrains Toolbox initialization
+[[ -d "$HOME/Library/Application Support/JetBrains/Toolbox/scripts" ]] && export PATH="$PATH:$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+
+# Kotlin Multiplatform initialization
+[[ -d "$HOME/Library/Android/sdk" ]] && export ANDROID_HOME="$HOME/Library/Android/sdk"
