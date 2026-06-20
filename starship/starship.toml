@@ -1,0 +1,604 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = 'gruvbox_dark'
+command_timeout = 500 # cap per-module command time (ms) so a slow git status etc. can't stall the prompt
+
+format = """
+[](fg:color_orange)\
+$os\
+[](bg:color_terminal_background fg:color_orange)[](bg:color_yellow fg:color_terminal_background)\
+$directory\
+[](bg:color_aqua fg:color_yellow)\
+$git_branch\
+$git_status\
+$git_state\
+[](bg:color_blue fg:color_aqua)\
+$c\
+$cobol\
+$cpp\
+$crystal\
+$daml\
+$dart\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$fortran\
+$gleam\
+$golang\
+$gradle\
+$haskell\
+$haxe\
+$java\
+$julia\
+$kotlin\
+$lua\
+$mojo\
+$nim\
+$ocaml\
+$odin\
+$perl\
+$php\
+$purescript\
+$python\
+$raku\
+$red\
+$rlang\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$typst\
+$vlang\
+$zig\
+[](bg:color_light_gray fg:color_blue)\
+$aws\
+$azure\
+$conda\
+$direnv\
+$docker_context\
+$gcloud\
+$kubernetes\
+$mise\
+$pixi\
+$terraform\
+[](bg:color_dark_gray fg:color_light_gray)\
+$time\
+[ ](fg:color_dark_gray)\
+$line_break\
+$character"""
+
+## Languages?
+## $nodejs\
+## $nix_shell\
+## $package\
+
+right_format = """
+$jobs\
+[](fg:color_dark_gray)\
+[$status](bg:color_dark_gray)\
+[](bg:color_dark_gray fg:color_light_gray)\
+$cmd_duration\
+[](bg:color_light_gray fg:color_purple)\
+$battery\
+[](bg:color_purple fg:color_dark_gray)\
+$memory_usage\
+[](fg:color_dark_gray)\
+"""
+
+[palettes.gruvbox_dark]
+color_aqua = '#89b482'
+color_blue = '#7daea3'
+color_cream = '#d4be98'
+color_dark_gray = '#32302f'
+color_green = '#a9b665'
+color_light_gray = '#665c54'
+color_orange = '#e78a4e'
+color_purple = '#d3869b'
+color_red = '#ea6962'
+color_terminal_background = '#1d2021'
+color_yellow = '#d8a657'
+
+# ===========================================================
+# Segment 1: OS & Identity (color_orange)
+# ===========================================================
+
+[hostname]
+format = '[$ssh_symbol$hostname ]($style)'
+ssh_only = true
+ssh_symbol = " "
+style = "bg:color_orange fg:color_terminal_background"
+
+[os]
+disabled = false
+format = '[$symbol ]($style)'
+style = "bg:color_orange fg:color_terminal_background"
+
+[os.symbols]
+Alpaquita = ""
+Alpine = ""
+AlmaLinux = ""
+Amazon = ""
+Android = ""
+Arch = ""
+Artix = ""
+CachyOS = ""
+CentOS = ""
+Debian = ""
+DragonFly = ""
+Emscripten = ""
+EndeavourOS = ""
+Fedora = ""
+FreeBSD = ""
+Garuda = "󰛓"
+Gentoo = ""
+HardenedBSD = "󰞌"
+Illumos = "󰈸"
+Kali = ""
+Linux = ""
+Mabox = ""
+Macos = ""
+Manjaro = ""
+Mariner = ""
+MidnightBSD = ""
+Mint = ""
+NetBSD = ""
+NixOS = ""
+Nobara = ""
+OpenBSD = "󰈺"
+openSUSE = ""
+OracleLinux = "󰌷"
+Pop = ""
+Raspbian = ""
+Redhat = ""
+RedHatEnterprise = ""
+RockyLinux = ""
+Redox = "󰀘"
+Solus = "󰠳"
+SUSE = ""
+Ubuntu = ""
+Unknown = ""
+Void = ""
+Windows = "󰍲"
+
+[username]
+format = '[$user ]($style)'
+style_root = "bold bg:color_orange fg:color_red"
+style_user = "bg:color_orange fg:color_terminal_background"
+
+# ===========================================================
+# Segment 2: Directory (color_yellow)
+# ===========================================================
+
+[directory]
+format = "[  $path ]($style)"
+read_only = " 󰌾"
+style = "bg:color_yellow fg:color_terminal_background"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Developer" = "󰲋 "
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+
+# ===========================================================
+# Segment 3: Git (color_aqua)
+# ===========================================================
+
+[git_branch]
+format = '[ $symbol $branch ]($style)'
+style = "bg:color_aqua fg:color_terminal_background"
+symbol = ""
+
+[git_commit]
+tag_symbol = '  '
+
+[git_state]
+format = '[($state $progress_current/$progress_total )]($style)'
+style = "bg:color_aqua fg:color_terminal_background"
+
+[git_status]
+format = '[($all_status$ahead_behind )]($style)'
+ignore_submodules = true
+style = "bg:color_aqua fg:color_terminal_background"
+
+# ===========================================================
+# Segment 4: Languages & Packages (color_blue)
+# ===========================================================
+
+[c]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[cpp]
+disabled = false
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[golang]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[gradle]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = ""
+
+[haskell]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[java]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[kotlin]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[nix_shell]
+disabled = false
+format = '[ $symbol( $state)( \($name\))]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[nodejs]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = "󰎙 "
+
+[package]
+disabled = false
+format = '[ $symbol$version]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = "󰏗 "
+
+[php]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[python]
+format = '[ $symbol( $version)( \($virtualenv\)) ]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[ruby]
+disabled = false
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+[rust]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = "󱘗 "
+
+[swift]
+format = '[ $symbol( $version)]($style)'
+style = "bg:color_blue fg:color_terminal_background"
+symbol = " "
+
+# ===========================================================
+# Segment 5: Infrastructure & Cloud (color_light_gray)
+# ===========================================================
+
+[aws]
+format = '[ $symbol($profile)( \($region\)) ]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = "  "
+
+[azure]
+disabled = false
+format = '[ $symbol($subscription)]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = " "
+
+[conda]
+format = '[ $symbol( $environment) ]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = " "
+
+[direnv]
+disabled = false
+format = '[ $symbol$allowed ]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = " "
+
+[docker_context]
+format = '[ $symbol( $context)]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = " "
+
+[gcloud]
+format = '[ $symbol($project)( \($region\)) ]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = "  "
+
+[kubernetes]
+disabled = false
+detect_env_vars = ['KUBECONFIG']
+detect_files = ['Dockerfile', 'docker-compose.yml']
+detect_folders = ['.kube']
+format = '[ $symbol$context( \($namespace\)) ]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = "󱃾 "
+
+[pixi]
+symbol = "󰏗 "
+
+[terraform]
+disabled = false
+format = '[ $symbol$workspace ]($style)'
+style = "bg:color_light_gray fg:color_terminal_background"
+symbol = "󱁢 "
+
+# ===========================================================
+# Segment 6: Time (color_dark_gray)
+# ===========================================================
+
+[time]
+disabled = true
+format = '[  $time ]($style)'
+time_format = "%R" # Hour:Minute Format
+style = "bg:color_dark_gray fg:color_cream"
+
+# ===========================================================
+# Segment 7: Prompt Character
+# ===========================================================
+
+[character]
+error_symbol = '[❯](bold fg:color_red)'
+success_symbol = '[❯](bold fg:color_green)'
+vimcmd_symbol = '[❮](bold fg:color_green)'
+vimcmd_replace_symbol = '[❮](bold fg:color_purple)'
+vimcmd_visual_symbol = '[❮](bold fg:color_yellow)'
+
+[line_break]
+disabled = true
+
+# ===========================================================
+# Right Prompt Segments
+# ===========================================================
+
+# --- Jobs (floating, before right segments) ---
+
+[jobs]
+disabled = false
+format = '[$symbol$number ]($style)'
+number_threshold = 1
+style = "bold fg:color_blue"
+symbol = "✦"
+
+# --- Status (color_dark_gray) ---
+
+[status]
+disabled = false
+format = '[$symbol$common_meaning$signal_name$maybe_int]($style) '
+map_symbol = true
+style = 'bg:color_dark_gray'
+success_symbol = '[[✓](bold bg:color_dark_gray fg:color_green)]($style)'
+symbol = '[[✖](bold bg:color_dark_gray fg:color_red)]($style)'
+
+# --- Command Duration (color_light_gray) ---
+
+[cmd_duration]
+format = "[ $duration ]($style)"
+min_time = 500
+style = "bg:color_light_gray fg:color_terminal_background"
+
+# --- Battery (color_purple) ---
+
+[battery]
+charging_symbol = "󰂄"
+discharging_symbol = "󰂃"
+empty_symbol = "󰂎"
+format = '[[$symbol]($style) $percentage](bold bg:color_purple fg:color_terminal_background)'
+full_symbol = "󰁹"
+unknown_symbol = "󰂑"
+
+[[battery.display]]
+style = "bold bg:color_purple fg:color_red"
+threshold = 30
+
+[[battery.display]]
+style = "bg:color_purple fg:color_yellow"
+threshold = 60
+
+# --- Memory Usage (color_dark_gray) ---
+
+[memory_usage]
+disabled = false
+format = '[ $symbol$ram_pct ]($style)'
+style = "bg:color_dark_gray fg:color_cream"
+symbol = "󰍛 "
+threshold = 75
+
+# ===========================================================
+# Symbol-Only Overrides (not in format string, alphabetical)
+# ===========================================================
+
+[buf]
+symbol = " "
+
+[bun]
+symbol = " "
+
+[cmake]
+symbol = " "
+
+[cobol]
+symbol = "󰒓 "
+
+[container]
+symbol = "󰡨 "
+
+[crystal]
+symbol = " "
+
+[daml]
+symbol = "󰘧 "
+
+[dart]
+symbol = " "
+
+[deno]
+symbol = " "
+
+[dotnet]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[erlang]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[fortran]
+symbol = "󱈚 "
+
+[fossil_branch]
+symbol = " "
+
+[gleam]
+symbol = "󰓎 "
+
+[guix_shell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[helm]
+symbol = "󰠳 "
+
+[hg_branch]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[maven]
+symbol = ""
+
+[meson]
+symbol = "󰔷 "
+
+[mise]
+symbol = "󰔷 "
+
+[mojo]
+symbol = "󰈸 "
+
+[nats]
+symbol = "󰇮 "
+
+[nim]
+symbol = "󰆥 "
+
+[ocaml]
+symbol = " "
+
+[odin]
+symbol = "󰟢 "
+
+[openstack]
+symbol = "󰑲 "
+
+[perl]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
+
+[pulumi]
+symbol = " "
+
+[purescript]
+symbol = "󰅭 "
+
+[quarto]
+symbol = "󰐕 "
+
+[raku]
+symbol = "󱖉 "
+
+[red]
+symbol = "󰐊 "
+
+[rlang]
+symbol = "󰟔 "
+
+[scala]
+symbol = " "
+
+[shlvl]
+symbol = "󰜮 "
+
+[singularity]
+symbol = "󰿂 "
+
+[solidity]
+symbol = "󰞻 "
+
+[spack]
+symbol = "󰣪 "
+
+[sudo]
+symbol = "󰀦 "
+
+[typst]
+symbol = " "
+
+[vagrant]
+symbol = "󰜐 "
+
+[vlang]
+symbol = " "
+
+[xmake]
+symbol = "󰔷 "
+
+[zig]
+symbol = " "
+
+# ===========================================================
+# Custom Modules
+# ===========================================================
+
+[custom.cpu_arch]
+command = "uname -m"
+description = "CPU architecture (useful for Apple Silicon)"
+disabled = true
+format = '[ $output ]($style)'
+shell = ["bash", "--noprofile", "--norc"]
+style = "bg:color_dark_gray fg:color_cream"
+when = "true"
+
+[custom.vpn]
+command = "echo 󰖂"
+description = "VPN connection indicator"
+format = '[$output ]($style)'
+shell = ["bash", "--noprofile", "--norc"]
+style = "fg:color_green"
+when = "ifconfig | grep -q 'utun\\|tun\\|wg\\|ppp'"
