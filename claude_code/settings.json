@@ -1,0 +1,7 @@
+{
+  "apiKeyHelper": "$HOME/.claude/anthropic_key.sh",
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  }
+}
