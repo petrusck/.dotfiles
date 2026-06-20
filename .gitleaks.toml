@@ -1,0 +1,4 @@
+title = "Gitleaks configuration for .dotfiles"
+
+[extend]
+useDefault = true
