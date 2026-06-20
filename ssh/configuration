@@ -1,0 +1,36 @@
+# Global configuration
+Host *
+	# --- Host verification ---
+	HashKnownHosts yes # store known_hosts entries as hashes (limits host enumeration if the file leaks)
+	StrictHostKeyChecking ask # prompt before trusting a new host key, and refuse to connect if a known key changes
+	VisualHostKey yes # print an ASCII-art fingerprint of the host key on connect (easier to spot key changes)
+
+	# --- Authentication ---
+	AddKeysToAgent yes # add a key to the running ssh-agent automatically the first time it is used
+	IdentitiesOnly yes # only use each host's configured IdentityFile, never broadcast every agent key
+	PreferredAuthentications publickey # try (and here, only allow) public-key authentication
+	UseKeychain yes # this option is only needed to save the keys passphrase in the Keychain (if they have one)
+
+	# --- Forwarding (disabled by default; enable per-host if needed) ---
+	ForwardAgent no # do not expose the local ssh-agent to the remote host
+	ForwardX11 no # do not tunnel remote X11 (GUI) windows back to this machine
+
+	# --- Connection keepalive ---
+	ServerAliveCountMax 3 # give up and disconnect after this many unanswered keepalive probes
+	ServerAliveInterval 60 # send keepalive every 60s; drop after 3 missed replies (detect dead connections)
+	TCPKeepAlive yes # also send TCP-level keepalives to notice dropped connections
+
+	# --- Misc ---
+	Compression no # do not compress session data (little benefit on fast links)
+	VerifyHostKeyDNS ask # check the host key against SSHFP records published in DNS, then prompt
+
+	# --- Crypto (modern algorithms only) ---
+	Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com # symmetric ciphers allowed to encrypt the session
+	KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512 # key-exchange algorithms used to derive the session keys
+	MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com # message-authentication algorithms protecting connection integrity
+
+Include hosts/*.conf
+
+# Using Secretive https://github.com/maxgoedjen/secretive
+Match Exec "[[ -d /Applications/Secretive.app ]]" # apply the block below only when the command succeeds (Secretive is installed)
+	IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh # use Secretive's agent socket instead of the default ssh-agent
