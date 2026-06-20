@@ -1,0 +1,214 @@
+{
+  "actions" : [
+    {
+      "actions" : [
+        {
+          "iconPath" : "/Applications/Obsidian.app",
+          "key" : "n",
+          "label" : "Obsidian",
+          "type" : "url",
+          "value" : "obsidian://open?vault=adesso"
+        },
+        {
+          "key" : "o",
+          "label" : "Outlook",
+          "type" : "application",
+          "value" : "/Applications/Microsoft Outlook.app"
+        },
+        {
+          "key" : "t",
+          "label" : "Teams",
+          "type" : "application",
+          "value" : "/Applications/Microsoft Teams.app"
+        }
+      ],
+      "iconPath" : "tray.2.fill",
+      "key" : "a",
+      "label" : "Work",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "b",
+          "label" : "Brave",
+          "type" : "application",
+          "value" : "/Applications/Brave Browser.app"
+        },
+        {
+          "iconPath" : "/Applications/DeepL.app",
+          "key" : "d",
+          "label" : "Deepl",
+          "type" : "command",
+          "value" : "open https://www.deepl.com/de/translator -a Firefox.app "
+        },
+        {
+          "key" : "f",
+          "type" : "application",
+          "value" : "/Applications/Firefox.app"
+        },
+        {
+          "iconPath" : "/Applications/LanguageTool.app",
+          "key" : "l",
+          "label" : "LanguageTool",
+          "type" : "command",
+          "value" : "open https://languagetool.org/de -a Firefox.app "
+        },
+        {
+          "iconPath" : "arrowtriangle.forward.square.fill",
+          "key" : "y",
+          "label" : "Youtube",
+          "type" : "command",
+          "value" : "open https://www.youtube.com -a Firefox.app "
+        },
+        {
+          "actions" : [
+            {
+              "key" : "b",
+              "label" : "Brave",
+              "type" : "command",
+              "value" : "defaultbrowser browser"
+            },
+            {
+              "key" : "f",
+              "label" : "Firefox",
+              "type" : "command",
+              "value" : "defaultbrowser firefox"
+            }
+          ],
+          "key" : "s",
+          "label" : "Set browser",
+          "type" : "group"
+        }
+      ],
+      "iconPath" : "network",
+      "key" : "b",
+      "label" : "Browser",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "k",
+          "type" : "application",
+          "value" : "/Applications/keymapp.app"
+        },
+        {
+          "iconPath" : "keyboard.badge.ellipsis.fill",
+          "key" : "m",
+          "label" : "Monkeytype",
+          "type" : "command",
+          "value" : "open https://monkeytype.com -a Firefox.app "
+        },
+        {
+          "iconPath" : "keyboard.badge.eye.fill",
+          "key" : "o",
+          "label" : "Oryx",
+          "type" : "command",
+          "value" : "open https://configure.zsa.io/voyager/layouts/jDQO4 -a Firefox.app "
+        }
+      ],
+      "iconPath" : "keyboard.fill",
+      "key" : "k",
+      "label" : "Keyboard",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "l",
+          "type" : "application",
+          "value" : "/Applications/Slack.app"
+        },
+        {
+          "key" : "s",
+          "type" : "application",
+          "value" : "/Applications/Signal.app"
+        },
+        {
+          "key" : "t",
+          "type" : "application",
+          "value" : "/Applications/Telegram.app"
+        },
+        {
+          "key" : "w",
+          "type" : "application",
+          "value" : "/Applications/WhatsApp.app"
+        }
+      ],
+      "iconPath" : "message.fill",
+      "key" : "m",
+      "label" : "Messaging",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "iconPath" : "/Applications/Obsidian.app",
+          "key" : "m",
+          "label" : "Mind",
+          "type" : "url",
+          "value" : "obsidian://open?vault=mind"
+        },
+        {
+          "iconPath" : "/Applications/Obsidian.app",
+          "key" : "n",
+          "label" : "Notes",
+          "type" : "url",
+          "value" : "obsidian://open?vault=notes"
+        }
+      ],
+      "iconPath" : "pencil.line",
+      "key" : "n",
+      "label" : "Notes",
+      "type" : "group"
+    },
+    {
+      "key" : "s",
+      "type" : "application",
+      "value" : "/Applications/Spotify.app"
+    },
+    {
+      "key" : "t",
+      "type" : "application",
+      "value" : "/Applications/Ghostty.app"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "d",
+          "type" : "application",
+          "value" : "/Applications/DeepL.app"
+        },
+        {
+          "key" : "l",
+          "type" : "application",
+          "value" : "/Applications/LanguageTool.app"
+        }
+      ],
+      "iconPath" : "eraser.line.dashed.fill",
+      "key" : "w",
+      "label" : "Writing",
+      "type" : "group"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "s",
+          "type" : "application",
+          "value" : "/System/Applications/Image Capture.app"
+        },
+        {
+          "key" : "e",
+          "type" : "application",
+          "value" : "/Applications/ExifCleaner.app"
+        }
+      ],
+      "iconPath" : "document.fill",
+      "key" : "d",
+      "label" : "Documents",
+      "type" : "group"
+    }
+  ],
+  "type" : "group"
+}
