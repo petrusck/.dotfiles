@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# Automatically adds branch-basename (last element of full branch path) to every commit message. This should be the ticketnumber in most cases.
+#
+
+# Get the current branch
+# Example: "feature/AMS-123-do-stuff"
+NAME=$(git branch --show-current)
+
+# Get the last path component of the branch name
+# Example: "feature/AMS-123-do-stuff" becomes "AMS-123-do-stuff"
+NAME=$(basename "$NAME")
+
+# Get the ticket number from the branch name and discard any additional trailing characters
+# Example: "AMS-123-do-stuff" becomes "AMS-123"
+NAME=$(echo "$NAME" | sed -E 's/^([A-Z]+-[0-9]+).*/\1/')
+
+# Get the commit message, check if it starts with a ticket number and if so, remove it. Then, trim whitespace (awk).
+# Example: "AMS-246-old-commit: Incremented number." becomes "Incremented number."
+MESSAGE=$(cat "$1" | sed -E 's/^[A-Z]+-[0-9]+[-a-zA-Z0-9]*:?(.*)/\1/' | awk '{$1=$1;print}')
+
+TEMPFILE=$(mktemp)
+trap 'rm -f "$TEMPFILE"' EXIT
+
+if [ -n "$NAME" ]; then
+	echo -n "${NAME}: ${MESSAGE}" > "${TEMPFILE}" && mv "${TEMPFILE}" "$1"
+fi

@@ -1,0 +1,124 @@
+[alias]
+	graph = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+	lol = log --oneline --decorate
+
+[branch]
+	sort = -committerdate # sort by most recently used branches
+
+[browser "firefox"]
+	cmd = open -a Firefox.app
+
+[column]
+	ui = auto # for supported commands show in columns if the output is to the terminal
+
+[commit]
+	verbose = true
+
+[core]
+	editor = nvim
+	excludesFile = ~/.config/git/global_gitignore
+	pager = delta
+	ignorecase = false
+	fsmonitor = true
+	untrackedcache = true
+	hooksPath = ~/.config/git/global_hooks
+
+[credential]
+	helper = osxkeychain
+
+[delta]
+	dark = true      # use dark mode for terminals with a dark background
+	features = decorations
+	inspect-raw-lines = false
+	line-numbers = true
+	navigate = true    # use n and N to move between diff sections
+	; side-by-side = true
+	syntax-theme = gruvbox-dark
+	tabs = 4
+
+[diff]
+	algorithm = histogram
+	colorMoved = true
+	mnemonicPrefix = true
+	renames = true
+	word-diff = color
+
+[difftool "nvimdiff"]
+	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+	prompt = true
+
+[fetch]
+	all = true
+	fsckobjects = true # avoid data corruption
+	prune = true
+	prunetags = true
+	tagOpts = --force
+	writeCommitGraph = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	process = git-lfs filter-process
+	required = true
+	smudge = git-lfs smudge -- %f
+
+[help]
+	autocorrect = prompt
+[init]
+	defaultBranch = main
+
+[interactive]
+	diffFilter = delta --color-only
+
+[log]
+	date = iso
+
+[merge]
+	conflictstyle = zdiff3
+	tool = nvimdiff
+
+[mergetool]
+	path = nvim
+	prompt = false # automatically launch merge tool without displaying a prompt
+
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+
+[pull]
+	rebase = true
+
+[push]
+	autosetupremote = true
+	default = simple
+	followtags = true # push new tags along with commits being pushed
+	recurseSubmodules = on-demand
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[receive]
+	fsckobjects = true # avoid data corruption
+
+[rerere] # REuse REcorded REsolution - Remember the resolution of git merge conflicts and automatically fix them on new occurrences
+	enable = true
+	autoupdate = true
+
+[submodule]
+	recurse = true
+
+[tag]
+	sort = version:refname
+	# sort = taggerdate # sort by most recently used tags
+
+[transfer]
+	fsckobjects = true # avoid data corruption
+
+[user]
+	name = Pere Bohigas
+
+[include]
+	path = additional_configuration/configuration.secret.gitconfig
