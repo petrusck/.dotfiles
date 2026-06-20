@@ -1,0 +1,158 @@
+customCommands:
+  - key: "<c-a>"
+    context: "commits"
+    description: "Set committer date to author date"
+    prompts:
+      - type: "confirm"
+        key: "Confirm"
+        title: "Set committer date to author date"
+        body: "Are you sure you want to update the committer date?"
+    command: "git rebase --autostash --keep-empty --no-autosquash --rebase-merges --committer-date-is-author-date {{.SelectedCommit.Hash}}^"
+  - key: '<c-g>'
+    command: "serie"
+    context: 'global'
+    description: 'Show commit graph'
+    output: terminal
+  - key: 'x'
+    context: 'files'
+    description: 'Opens selected file in Xcode'
+    loadingText: 'Opening in Xcode'
+    output: popup
+    command: >-
+      case "{{.SelectedFile.Name}}" in
+        *.xcodeproj|*.xcworkspace)
+          xed --background {{.SelectedFile.Name | quote}} ;;
+        *)
+          echo "Selected file is not an Xcode project or workspace" ;;
+      esac
+  - key: 'x'
+    context: 'global'
+    description: 'Opens Xcode on current project'
+    loadingText: 'Opening Xcode on current project'
+    prompts:
+      - type: 'menuFromCommand'
+        title: 'Select a project or workspace to open in Xcode:'
+        key: 'XcodeProject'
+        command: "find . \\( -name '*.xcodeproj' -o -name '*.xcworkspace' \\) -not -path '*.xcodeproj/*' | grep -v '\\.build/' | grep -v 'DerivedData' | awk -F/ '{print NF, $0}' | sort -n | cut -d' ' -f2-"
+        filter: './(?P<project>.*)'
+        valueFormat: '{{ .project }}'
+        labelFormat: '{{ .project | green }}'
+    command: "xed --background {{.Form.XcodeProject | quote}}"
+  - key: 'X'
+    context: 'files'
+    description: 'Closes selected project in Xcode'
+    loadingText: 'Closing project in Xcode'
+    output: popup
+    command: >-
+      case "{{.SelectedFile.Name}}" in
+        *.xcodeproj|*.xcworkspace)
+          BASENAME=$(basename "{{.SelectedFile.Name | quote}}") &&
+          osascript -e "
+            if application id \"com.apple.dt.Xcode\" is running then
+              tell application id \"com.apple.dt.Xcode\"
+                close workspace document \"$BASENAME\" saving ask
+              end tell
+            end if" &&
+          PROJ_NAME=$(echo "$BASENAME" | sed 's/\.\(xcodeproj\|xcworkspace\)$//') &&
+          find "$HOME/Library/Developer/Xcode/DerivedData" -maxdepth 1 -type d -name "${PROJ_NAME}-*" -exec rm -rf {} + &&
+          echo "Closed $BASENAME and cleaned DerivedData" ;;
+        *)
+          echo "Selected file is not an Xcode project or workspace" ;;
+      esac
+  - key: 'X'
+    context: 'global'
+    description: 'Closes Xcode'
+    loadingText: 'Closing Xcode'
+    output: popup
+    prompts:
+      - type: 'menu'
+        title: 'How to close Xcode?'
+        key: 'CloseMethod'
+        options:
+          - name: 'Close a specific project'
+            value: 'specific'
+          - name: 'Quit Xcode entirely'
+            value: 'quit'
+      - type: 'menuFromCommand'
+        title: 'Select a project or workspace to close:'
+        key: 'XcodeProject'
+        condition: '{{ eq .Form.CloseMethod "specific" }}'
+        command: "results=$(find . \\( -name '*.xcodeproj' -o -name '*.xcworkspace' \\) -not -path '*.xcodeproj/*' | grep -v '\\.build/' | grep -v 'DerivedData'); if [ -n \"$results\" ]; then echo \"$results\" | awk -F/ '{print NF, $0}' | sort -n | cut -d' ' -f2-; else echo 'No Xcode projects found'; fi"
+        filter: './(?P<project>.*)'
+        valueFormat: '{{ .project }}'
+        labelFormat: '{{ .project | green }}'
+      - type: 'menu'
+        title: 'Save changes before closing?'
+        key: 'SaveOption'
+        condition: '{{ eq .Form.CloseMethod "specific" }}'
+        options:
+          - name: 'Save'
+            value: 'yes'
+          - name: "Don't save"
+            value: 'no'
+          - name: 'Ask (macOS dialog)'
+            value: 'ask'
+    command: >-
+      if [ "{{.Form.CloseMethod}}" = "specific" ]; then
+        BASENAME=$(basename "{{.Form.XcodeProject | quote}}") &&
+        osascript -e "
+          if application id \"com.apple.dt.Xcode\" is running then
+            tell application id \"com.apple.dt.Xcode\"
+              close workspace document \"$BASENAME\" saving {{.Form.SaveOption}}
+            end tell
+          end if" &&
+        PROJ_NAME=$(echo "$BASENAME" | sed 's/\.\(xcodeproj\|xcworkspace\)$//') &&
+        find "$HOME/Library/Developer/Xcode/DerivedData" -maxdepth 1 -type d -name "${PROJ_NAME}-*" -exec rm -rf {} + &&
+        echo "Closed $BASENAME and cleaned DerivedData";
+      else
+        osascript -e '
+          if application id "com.apple.dt.Xcode" is running then
+            quit app "Xcode"
+          end if' &&
+        echo "Xcode has been quit";
+      fi
+  - key: '<c-d>'
+    context: 'commits'
+    description: 'Change commit date and time'
+    prompts:
+      - type: 'input'
+        title: 'Give a new date and time for the commit (default current timestamp):'
+        key: 'CommitTimestamp'
+        initialValue: ''
+        suggestions:
+          command: 'Enter a timestamp using the ISO 8601 format'
+    # TODO: Check if a timestamp is being entered otherwise use current timestamp with ISO 8601 format -> `date -Iseconds` but using Go
+    command: >-
+      GIT_COMMITTER_DATE="{{.Form.CommitTimestamp}}" git commit --amend --no-edit --date "{{.Form.CommitTimestamp}}"
+    loadingText: 'Changing commit timestamp'
+    output: popup
+git:
+  autoFetch: true
+  autoRefresh: true
+  disableForcePushing: false
+  fetchAll: true # Pass --all flag when running git fetch. Set to false to fetch only origin (or the current branch's upstream remote if there is one)
+  mainBranches: [master, main]
+  pagers:
+    - colorArg: always
+      pager: delta --dark --syntax-theme=gruvbox-dark --true-color=always --paging=never #--24-bit-color=never
+      useConfig: false
+  # The main branches. We colour commits green if they belong to one of these branches,
+  # so that you can easily see which commits are unique to your branch (coloured in yellow)
+  parseEmoji: true
+  overrideGpg: true
+gui:
+  authorColors:
+    # use green for me
+    'Pere Bohigas': 'green'
+    # use white for other authors
+    '*': 'white'
+  language: 'en' # one of 'auto' | 'en' | 'zh-CN' | 'zh-TW' | 'pl' | 'nl' | 'ja' | 'ko' | 'ru'
+  nerdFontsVersion: "3"
+  theme:
+    selectedLineBgColor:
+      - reverse
+      - bold
+  timeFormat: '02 Jan 2006' # https://pkg.go.dev/time#Time.Format
+notARepository: 'quit'
+os:
+  editPreset: 'nvim'
