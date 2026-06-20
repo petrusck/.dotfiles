@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Enable Touch ID for sudo via /etc/pam.d/sudo_local (Apple-supported, survives OS updates)
+
+SUDO_LOCAL="/etc/pam.d/sudo_local"
+
+# Check if the script is being run with root privileges
+if [ "$(id -u)" -ne 0 ]; then
+	echo "This script must be run with elevated privileges (e.g., sudo)."
+	return 1
+fi
+
+# Check if Touch ID is already enabled in sudo_local
+if [ -f "$SUDO_LOCAL" ] && grep -q "pam_tid.so" "$SUDO_LOCAL"; then
+	echo "Touch ID is already enabled for sudo (via sudo_local)."
+	return 0
+fi
+
+# Create sudo_local from template or from scratch
+TEMP_FILE=$(mktemp /tmp/sudo_local.XXXXXX)
+trap 'rm -f "$TEMP_FILE"' EXIT INT TERM
+
+if [ -f "$SUDO_LOCAL" ]; then
+	# File exists but without pam_tid.so — prepend the auth line after the first line
+	awk 'NR==1{print; print "auth       sufficient     pam_tid.so"; next} 1' "$SUDO_LOCAL" > "$TEMP_FILE"
+elif [ -f "${SUDO_LOCAL}.template" ]; then
+	# Use Apple's template as a starting point, uncommenting the pam_tid.so line
+	sed 's/^#auth/auth/' "${SUDO_LOCAL}.template" > "$TEMP_FILE"
+else
+	# Create from scratch
+	printf "auth       sufficient     pam_tid.so\n" > "$TEMP_FILE"
+fi
+
+chmod 444 "$TEMP_FILE"
+mv "$TEMP_FILE" "$SUDO_LOCAL"
+
+# Verify
+if grep -q "pam_tid.so" "$SUDO_LOCAL"; then
+	echo "Touch ID successfully enabled for sudo (via sudo_local)."
+else
+	echo "Failed to enable Touch ID for sudo."
+fi

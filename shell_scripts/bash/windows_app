@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+restart_app() {
+    if pgrep -x "Windows App" > /dev/null; then
+        echo "Closing Windows App..."
+        pkill "Windows App"
+        sleep 1
+    fi
+    echo "Opening Windows App..."
+    open -a "Windows App"
+}
+
+restart_app
+
+# '/Applications/Windows App.app/Contents/MacOS/Windows App' --script
