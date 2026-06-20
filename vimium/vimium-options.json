@@ -1,0 +1,16 @@
+{
+  "keyMappings": "map J nextTab\nmap gT nextTab\nmap K previousTab\nmap gt previousTab",
+  "grabBackFocus": true,
+  "searchEngines": "# Vimium custom search engines\n\n#Apple Documentation\napp: https://developer.apple.com/search/?q=%s&type=Documentation Apple Documentation\n\n## DuckDuckGo\nd: https://duckduckgo.com/?q=%s DuckDuckGo\n\n## GitHub\ngh: https://github.com/search?q=%s GitHub\n\n## Google.\ng: https://www.google.com/search?q=%s Google\ngi: https://www.google.com/search?tbm=isch&q=%s Google Images\ngm: https://www.google.com/maps?q=%s Google Maps\n\n## IMDB\nimdb: https://www.imdb.com/find?s=all&q=%s IMDB\n\n## Avalq Jira\naj: https://jira.tracking.sits.avaloq.net/browse/%s Avaloq Jira\n\n## StackOverflow\nso: https://stackoverflow.com/search?q=%s StackOverflow\n\n## Wikipedia.\nw: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia\n\n## Youtube\nyt: https://www.youtube.com/results?search_query=%s YouTube",
+  "settingsVersion": "2.3",
+  "exclusionRules": [
+    {
+      "passKeys": "",
+      "pattern": "https?://mail.google.com/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://online.tipp10.com/*"
+    }
+  ]
+}
